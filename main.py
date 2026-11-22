@@ -33,6 +33,8 @@ def main() -> None:
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             f.write(TEXT)
+        # mkstemp makes 0600; the grader must be able to read the output.
+        os.chmod(tmp, 0o644)
         os.replace(tmp, out)
     except BaseException:
         os.unlink(tmp)
